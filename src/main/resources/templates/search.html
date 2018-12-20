@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Выдача книги</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/sunny/jquery-ui.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<script>
+$(function () {
+    $("#titles").autocomplete({
+        source:'http://localhost:8080/search/titles',
+        minLength: 6,
+        delay: 500
+    });
+})
+$(function () {
+    $("#author").autocomplete({
+        source:'http://localhost:8080/search/authors',
+        minLength: 3,
+        delay: 500
+    });
+})
+$(function () {
+    $("#publisher").autocomplete({
+        source:'http://localhost:8080/search/publishers',
+        minLength: 1,
+        delay: 500
+    });
+})
+
+$(document).on('submit', '#search_form', function () {
+    var data = $(this).serializeArray();
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "localhost:8080/search", true);
+    xhr.send(data);
+    if(xhr.status == 200){
+        document.location.href = "http://localhost:63342/libr.test/com.evillcat.libr.test.main/templates/result.html?_ijt=on2dh4gem3raahcg1njgj1mnos"
+    }
+})
+
+</script>
+
+
+
+<br>
+<br>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-5 col-md-offset-3">
+
+<h3>Поиск</h3>
+    <br>
+    <br>
+<form id="search_form">
+    <div class="form-group">
+        <label for="titles">Заглавие книги</label>
+        <input class="form-control" id = "titles" name="title">
+    </div>
+
+    <div class="form-group">
+        <label for="author">Автор</label>
+        <input class="form-control" id = "author" name="fullName">
+    </div>
+
+    <div class="form-group">
+        <label for="publisher">Издательство</label>
+        <input class="form-control" id = "publisher" name="pubOffice">
+    </div>
+    <div class="form-group">
+        <button type = "submit"class="btn btn-primary">Найти</button>
+    </div>
+</form>
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
